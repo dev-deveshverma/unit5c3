@@ -6,30 +6,44 @@ export const BookDetailsPage = () => {
   // Get book details based on ID whenever user lands on the page
   // ID will come from route
 
-  const [books, setBooks] = useState([]);
-  const {id} = useParams();
-  useEffect(()=>{
-    axios.get(`http://localhost:8080/books/${id}`).then((res)=>{
-      setBooks(res.data);
-    })
-  },[])
+  const [book, setBook] = useState(null);
+  const { id } = useParams();
+  useEffect(() => {
+    axios.get(`http://localhost:8080/books/${id}`).then((res) => {
+      setBook({ ...res.data });
+    });
+  }, []);
 
-  books.map((el)=>{
-    return (
-    
-        <div className="bookContainer">
-          <h2 className="title">{el.title}</h2>
-          <img className="image" src={el.imageUrl} alt="#" />
-          <div className="author">{el.author}</div>
-          <div className="description">{el.description}</div>
-          <div className="price">{el.price}</div>
-          <div className="section">{el.section}</div>
-          <div className="isbnNumber">{el.isbnNumber}</div>
-          <ul className="reviews">
-            {/* Reviews will be an array, iterate over them and create a new <li> for every review */}
-          </ul>
-        </div>
-    );
-  })
- 
+  if(book==null){
+    return null;
+  }
+
+  return (
+    <>
+      <div className="bookContainer" key={book.id}>
+        <h2 className="title">{book.title}</h2>
+        <img
+          className="image"
+          src={book.imageUrl}
+          alt="#"
+          style={{ width: "200px", height: "250px" }}
+        />
+        <div className="author">{book.author}</div>
+        <div className="description">{book.description}</div>
+        <div className="price">{book.price}</div>
+        <div className="section">{book.section}</div>
+        <div className="isbnNumber">{book.isbnNumber}</div>
+        <ul className="reviews">
+          {/* Reviews will be an array, iterate over them and create a new <li> for every review */
+            book.reviews.map((el, i) => {
+              return <li key={i}>{el}</li>;
+            })
+          }
+          
+
+          
+        </ul>
+      </div>
+    </>
+  );
 };

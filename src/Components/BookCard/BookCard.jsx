@@ -2,6 +2,23 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const BookCard = ({ id, imageUrl, title, price }) => {
+  const Wrapper = styled.div`
+    border: 1px solid black;
+    cursor: pointer;
+    `;
+  const Title = styled.h2`
+    color: blue;
+    margin: 0;
+    `;
+  const Image = styled.img`
+    width: 100%;
+    height: 300px;
+  `;
+  const Price = styled.h2`
+    margin: 0%;
+  `;
+
+
   // Bookcard is a card looking component, that is also a 'Link' for react-router
   //  it's basically shows one books information.
   // You can style custom tags with styled components in following way:
@@ -19,12 +36,13 @@ export const BookCard = ({ id, imageUrl, title, price }) => {
   // <YourStyledLink to={}>
   //    title, image price etc here
   // </YourStyledLink>
-  return(
-    <Link to={`/books/${id}`} style={{cursor:"pointer"}}>
-        <img src={imageUrl} alt=""  style={{width:"200px", height:"200px"}} />
-        <h4>{id}</h4>
-        <h4>{price}</h4>
-        <h4>{title}</h4>
-    </Link>
-  )
+  return (
+    <Wrapper className="bookCard">
+      <Link to={`/bookdetailspage/${id}`}>
+        <Image src={imageUrl} />
+        <Title className="title">{title}</Title>
+        <Price className="price">{price}</Price>
+      </Link>
+    </Wrapper>
+  );
 };
